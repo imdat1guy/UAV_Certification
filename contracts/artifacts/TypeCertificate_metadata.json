@@ -1,0 +1,500 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "applicationId",
+						"type": "uint256"
+					}
+				],
+				"name": "ApplicationRejected",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "applicationId",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "manufacturer",
+						"type": "address"
+					}
+				],
+				"name": "ApplicationSubmitted",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "applicationId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "ipfsHashCertificate",
+						"type": "string"
+					}
+				],
+				"name": "CertificateIssued",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "applicationId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "csCID",
+						"type": "string"
+					}
+				],
+				"name": "DocumentsApproved",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "applicationId",
+						"type": "uint256"
+					}
+				],
+				"name": "DocumentsUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "applicationId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "internalReportCID",
+						"type": "string"
+					}
+				],
+				"name": "ExaminationRequested",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "applicationId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "notifiedBody",
+						"type": "address"
+					}
+				],
+				"name": "InspectionCompleted",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "notifiedBody",
+						"type": "address"
+					}
+				],
+				"name": "NotifiedBodyAuthorized",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "notifiedBody",
+						"type": "address"
+					}
+				],
+				"name": "NotifiedBodyRevoked",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "applicationCounter",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "applications",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "manufacturer",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "ipfsDirectoryCID",
+						"type": "string"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "droneSpecDocumentHash",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "enum TypeCertificate.CertificateStatus",
+						"name": "status",
+						"type": "uint8"
+					},
+					{
+						"internalType": "address",
+						"name": "assignedNotifiedBody",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "notifiedBodyReportCID",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "applicationId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "certificationSpecificationsCID",
+						"type": "string"
+					}
+				],
+				"name": "approveDocuments",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "notifiedBody",
+						"type": "address"
+					}
+				],
+				"name": "authorizeNotifiedBody",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "applicationId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "notifiedBodyReportCID",
+						"type": "string"
+					}
+				],
+				"name": "completeInspection",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "applicationId",
+						"type": "uint256"
+					}
+				],
+				"name": "getApplication",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "id",
+								"type": "uint256"
+							},
+							{
+								"internalType": "address",
+								"name": "manufacturer",
+								"type": "address"
+							},
+							{
+								"internalType": "string",
+								"name": "ipfsDirectoryCID",
+								"type": "string"
+							},
+							{
+								"internalType": "bytes32",
+								"name": "droneSpecDocumentHash",
+								"type": "bytes32"
+							},
+							{
+								"internalType": "enum TypeCertificate.CertificateStatus",
+								"name": "status",
+								"type": "uint8"
+							},
+							{
+								"internalType": "address",
+								"name": "assignedNotifiedBody",
+								"type": "address"
+							},
+							{
+								"internalType": "string",
+								"name": "notifiedBodyReportCID",
+								"type": "string"
+							}
+						],
+						"internalType": "struct TypeCertificate.Application",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "applicationId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "typeCertificateCID",
+						"type": "string"
+					}
+				],
+				"name": "issueCertificate",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "notifiedBodies",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "regulatoryAuthority",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "applicationId",
+						"type": "uint256"
+					}
+				],
+				"name": "rejectApplication",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "applicationId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "internalReportCID",
+						"type": "string"
+					}
+				],
+				"name": "requestTypeExamination",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "notifiedBody",
+						"type": "address"
+					}
+				],
+				"name": "revokeNotifiedBody",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "ipfsDirectoryCID",
+						"type": "string"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "droneSpecDocumentHash",
+						"type": "bytes32"
+					}
+				],
+				"name": "submitApplication",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "applicationId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "updatedIpfsDirectoryCID",
+						"type": "string"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "updatedDroneSpecDocumentHash",
+						"type": "bytes32"
+					}
+				],
+				"name": "updateDocuments",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/TypeCertification.sol": "TypeCertificate"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/TypeCertification.sol": {
+			"keccak256": "0x7a9bf5c345e718ce107c9d1a69337fc50fc942c8dc33fecffc041a8be9f2857a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://d0a9914ca55f71cec1721fa9ebdebc92dd777511648142caa9118a5e17f50db9",
+				"dweb:/ipfs/QmawrpmKMEF5HtFtUGgqK8QFbScysF3EXEHHtBKZgSzCBr"
+			]
+		}
+	},
+	"version": 1
+}

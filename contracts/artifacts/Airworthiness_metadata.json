@@ -1,0 +1,251 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_regulatoryAuthority",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "applicationId",
+						"type": "uint256"
+					}
+				],
+				"name": "ApplicationSubmitted",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "applicationId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "airworthinessCertificateHash",
+						"type": "string"
+					}
+				],
+				"name": "CertificateIssued",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "applicationId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "inspectionReportHash",
+						"type": "string"
+					}
+				],
+				"name": "InspectionCompleted",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "applicationCounter",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "applications",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "uavTokenAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "uavTokenId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "ipfsHashDocuments",
+						"type": "string"
+					},
+					{
+						"internalType": "enum Airworthiness.CertificationStatus",
+						"name": "status",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "applicationId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "inspectionReportHash",
+						"type": "string"
+					}
+				],
+				"name": "completeInspection",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "applicationId",
+						"type": "uint256"
+					}
+				],
+				"name": "isCertified",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "applicationId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "airworthinessCertificateHash",
+						"type": "string"
+					}
+				],
+				"name": "issueCertificate",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "regulatoryAuthority",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "uavNFTAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "uavTokenId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "ipfsHashDocuments",
+						"type": "string"
+					}
+				],
+				"name": "submitApplication",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/Airworthiness.sol": "Airworthiness"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/Airworthiness.sol": {
+			"keccak256": "0x9678c89b2bd4ae00bb5bfc7ae05f1cff485ecf2f6e5ba8c03d2a620fa038469c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://0fb3d653f1a81905f14217497d6ca6a23862fd3d9bffd83b8e9e3c05d0698cdf",
+				"dweb:/ipfs/Qmcebff6EwRjZ3yjgEPH1PgThdgJAJfDJXFc1eck4wdJXN"
+			]
+		}
+	},
+	"version": 1
+}
