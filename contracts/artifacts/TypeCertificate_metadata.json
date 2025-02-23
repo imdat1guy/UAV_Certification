@@ -473,7 +473,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/TypeCertification.sol": "TypeCertificate"
+			"contracts/TypeCertificate.sol": "TypeCertificate"
 		},
 		"evmVersion": "cancun",
 		"libraries": {},
@@ -487,12 +487,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"contracts/TypeCertification.sol": {
-			"keccak256": "0x7a9bf5c345e718ce107c9d1a69337fc50fc942c8dc33fecffc041a8be9f2857a",
+		"contracts/TypeCertificate.sol": {
+			"keccak256": "0x62de5172576e86d4fcb6eb3ad05d10acb998a077990e085dc7bcd9c510c87b13",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://d0a9914ca55f71cec1721fa9ebdebc92dd777511648142caa9118a5e17f50db9",
-				"dweb:/ipfs/QmawrpmKMEF5HtFtUGgqK8QFbScysF3EXEHHtBKZgSzCBr"
+				"bzz-raw://67ebe69ddb5a9ea89408275916fee5339ddbe0bae5ec144546902f8c9d562855",
+				"dweb:/ipfs/QmNnaPrJ6XkLFrT9fCt6mMVwtWHNrLmr2ynRkv1hcw6gv3"
 			]
 		}
 	},

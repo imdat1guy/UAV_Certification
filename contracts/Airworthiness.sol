@@ -25,6 +25,7 @@ contract Airworthiness {
     event CertificateIssued(uint256 indexed applicationId, string airworthinessCertificateHash);
 
     constructor(address _regulatoryAuthority) {
+    require(_regulatoryAuthority != address(0), "Invalid address");
         regulatoryAuthority = _regulatoryAuthority;
     }
 
@@ -50,13 +51,15 @@ contract Airworthiness {
         emit InspectionCompleted(applicationId, inspectionReportHash);
     }
 
-    function issueCertificate(uint256 applicationId, string memory airworthinessCertificateHash) external onlyRegulatoryAuthority {
-        Application storage app = applications[applicationId];
-        require(app.status == CertificationStatus.Pending, "Application is not pending");
-        app.status = CertificationStatus.Certified;
+function issueCertificate(uint256 applicationId, string memory airworthinessCertificateHash) external onlyRegulatoryAuthority {
+    Application storage app = applications[applicationId];
+    
+    require(app.id != 0, "Application does not exist"); // Ensure the application exists
+    require(app.status == CertificationStatus.Pending, "Application is not pending");
 
-        emit CertificateIssued(applicationId, airworthinessCertificateHash);
-    }
+    app.status = CertificationStatus.Certified;
+    emit CertificateIssued(applicationId, airworthinessCertificateHash);
+}
 
     function isCertified(uint256 applicationId) external view returns (bool) {
         Application storage app = applications[applicationId];

@@ -860,22 +860,22 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "operator",
+						"name": "",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "from",
+						"name": "",
 						"type": "address"
 					},
 					{
 						"internalType": "uint256",
-						"name": "tokenId",
+						"name": "",
 						"type": "uint256"
 					},
 					{
 						"internalType": "bytes",
-						"name": "data",
+						"name": "",
 						"type": "bytes"
 					}
 				],
@@ -1344,9 +1344,6 @@
 				"name()": {
 					"details": "See {IERC721Metadata-name}."
 				},
-				"onERC721Received(address,address,uint256,bytes)": {
-					"details": "Whenever an {IERC721} `tokenId` token is transferred to this contract via {IERC721-safeTransferFrom} by `operator` from `from`, this function is called. It must return its Solidity selector to confirm the token transfer. If any other value is returned or the interface is not implemented by the recipient, the transfer will be reverted. The selector can be obtained in Solidity with `IERC721Receiver.onERC721Received.selector`."
-				},
 				"ownerOf(uint256)": {
 					"details": "See {IERC721-ownerOf}."
 				},
@@ -1385,7 +1382,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/UAVNFT.sol": "UAVPassportNFT"
+			"contracts/UAVPassportNFT.sol": "UAVPassportNFT"
 		},
 		"evmVersion": "cancun",
 		"libraries": {},
@@ -1413,6 +1410,30 @@
 			"urls": [
 				"bzz-raw://fd54abb96a6156d9a761f6fdad1d3004bc48d2d4fce47f40a3f91a7ae83fc3a1",
 				"dweb:/ipfs/QmUrFSGkTDJ7WaZ6qPVVe3Gn5uN2viPb7x7QQ35UX4DofX"
+			]
+		},
+		"@openzeppelin/contracts/interfaces/IERC165.sol": {
+			"keccak256": "0xde7e9fd9aee8d4f40772f96bb3b58836cbc6dfc0227014a061947f8821ea9724",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://11fea9f8bc98949ac6709f0c1699db7430d2948137aa94d5a9e95a91f61a710a",
+				"dweb:/ipfs/QmQdfRXxQjwP6yn3DVo1GHPpriKNcFghSPi94Z1oKEFUNS"
+			]
+		},
+		"@openzeppelin/contracts/interfaces/IERC4906.sol": {
+			"keccak256": "0x1b8691e244f6e11d987459993671db0af33e6a29f7805eac6a9925cc6b601957",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a9e2a5efc2e14e98f5fe91bbab769199b4987a40dd3b96075b04957fda2ae80f",
+				"dweb:/ipfs/QmbAjrSSVBiJ6MbgF7Jkr53m674iGMZ6haWbbRrWDZJraK"
+			]
+		},
+		"@openzeppelin/contracts/interfaces/IERC721.sol": {
+			"keccak256": "0xc4d7ebf63eb2f6bf3fee1b6c0ee775efa9f31b4843a5511d07eea147e212932d",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://01c66a2fad66bc710db7510419a7eee569b40b67cd9f01b70a3fc90d6f76c03b",
+				"dweb:/ipfs/QmT1CjJZq4eTNA4nu8E9ZrWfaZu6ReUsDbjcK8DbEFqwx5"
 			]
 		},
 		"@openzeppelin/contracts/interfaces/draft-IERC6093.sol": {
@@ -1445,6 +1466,14 @@
 			"urls": [
 				"bzz-raw://78586466c424f076c6a2a551d848cfbe3f7c49e723830807598484a1047b3b34",
 				"dweb:/ipfs/Qmb717ovcFxm7qgNKEShiV6M9SPR3v1qnNpAGH84D6w29p"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol": {
+			"keccak256": "0xe52813067c6d5838eeb34e1da8beb2514371a7d778266013b04ca3be1dda7100",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://53fb552d625eb5f60ef9dce439c826bb780952cbbafc985db6e48ac6382a5585",
+				"dweb:/ipfs/QmSEbLqEWN1SqsWekfqt6RWC4oEajFWtZ5j8i6gKaGdtKr"
 			]
 		},
 		"@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol": {
@@ -1480,11 +1509,11 @@
 			]
 		},
 		"@openzeppelin/contracts/utils/Strings.sol": {
-			"keccak256": "0x725209b582291bb83058e3078624b53d15a133f7401c30295e7f3704181d2aed",
+			"keccak256": "0x44f87e91783e88415bde66f1a63f6c7f0076f2d511548820407d5c95643ac56c",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://0564ddb19c6d870e27b789d8f985283d815267ad7224883c2d5243c8bacc7dc0",
-				"dweb:/ipfs/QmeC953H4sj88ZRFdJNFdmpf7J9SksP1wK4jyMHLo66z49"
+				"bzz-raw://13a51bc2b23827744dcf5bad10c69e72528cf015a6fe48c93632cdb2c0eb1251",
+				"dweb:/ipfs/QmZwPA47Yqgje1qtkdEFEja8ntTahMStYzKf5q3JRnaR7d"
 			]
 		},
 		"@openzeppelin/contracts/utils/introspection/ERC165.sol": {
@@ -1527,20 +1556,28 @@
 				"dweb:/ipfs/QmVUSvooZKEdEdap619tcJjTLcAuH6QBdZqAzWwnAXZAWJ"
 			]
 		},
-		"contracts/CertificateTypes.sol": {
-			"keccak256": "0x576d10489197ae3dbc2f54e8ad0642bdefd24d68f8d7cd7777cc030ce0a8d9fc",
+		"contracts/CertificateNFT.sol": {
+			"keccak256": "0x98ffe75561269a67f79eabf771d979703eac06bab08d8acdd07215a4248daa22",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://9c5ccbcd8273f6e8cf11e296bea0d7c1df8fcb1905a2179be9f2d905be8d49ce",
-				"dweb:/ipfs/QmbDKEXqHqqmWm2XdhQQZqzvnQ7s2QgfxgynqS4NHTaN9M"
+				"bzz-raw://9aed60e2c30556f3afa3c5b89f06ca74f96c30d046016795fa38eae29cf4c236",
+				"dweb:/ipfs/QmPCWwsgX3oHgwt2pKYPnEtwELdoZX4WY3Qx4fJJBocbDW"
 			]
 		},
-		"contracts/UAVNFT.sol": {
-			"keccak256": "0x87e5165b11be50265f37cf1cc382d401bc9e320b31fd17b4c12bf33353535507",
+		"contracts/CertificateTypes.sol": {
+			"keccak256": "0xd9635ce3dcb55b410778aa27fe23ce2f6b51054a07a9a46ece8e7ecf7e3638da",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://77d2acc3e7c85e7654b8fe9945037898129ebf063d1cf971706db2ce8072fc23",
-				"dweb:/ipfs/QmVSN1g5pbncBarHcPyqCnCFT9xPny42zEUpGJbeRXnwzK"
+				"bzz-raw://acd82b8ec8ea3693a89746adbd38c983ca14c4a1bd105763db5e0ff155423be8",
+				"dweb:/ipfs/QmcMHMHc1PuKqCYYpTbJh2Qd1293xQVXdRjhMou1ANKSSR"
+			]
+		},
+		"contracts/UAVPassportNFT.sol": {
+			"keccak256": "0x07633be6f378506baa1329db68e304da16a663c26649a69ac8abd8a914d4139f",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6fc94752cd4ff4f564d986d95c642937408c924c62cbb547ad42c1dc6b6cb6ad",
+				"dweb:/ipfs/QmY6VyYCSCUiXGJedjLY2No2wAVcPwMYTTcfKwVvqL2x86"
 			]
 		}
 	},

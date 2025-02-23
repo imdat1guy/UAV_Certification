@@ -33,11 +33,11 @@
 	},
 	"sources": {
 		"contracts/CertificateTypes.sol": {
-			"keccak256": "0x576d10489197ae3dbc2f54e8ad0642bdefd24d68f8d7cd7777cc030ce0a8d9fc",
+			"keccak256": "0xd9635ce3dcb55b410778aa27fe23ce2f6b51054a07a9a46ece8e7ecf7e3638da",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://9c5ccbcd8273f6e8cf11e296bea0d7c1df8fcb1905a2179be9f2d905be8d49ce",
-				"dweb:/ipfs/QmbDKEXqHqqmWm2XdhQQZqzvnQ7s2QgfxgynqS4NHTaN9M"
+				"bzz-raw://acd82b8ec8ea3693a89746adbd38c983ca14c4a1bd105763db5e0ff155423be8",
+				"dweb:/ipfs/QmcMHMHc1PuKqCYYpTbJh2Qd1293xQVXdRjhMou1ANKSSR"
 			]
 		}
 	},

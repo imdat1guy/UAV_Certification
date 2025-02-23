@@ -1,0 +1,643 @@
+No files changed, compilation skipped
+
+Ran 8 tests for tests/CertificateNFT.t.sol:CertificateNFTTest
+[PASS] test_ShouldAllowAuthorityToMintCertificate() (gas: 244348)
+Traces:
+  [244348] CertificateNFTTest::test_ShouldAllowAuthorityToMintCertificate()
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [24537] MockAirworthiness::certifyApplication(1)
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [190083] CertificateNFT::mintCertificate("ipfs://certificate-metadata", 0, Identity: [0x0000000000000000000000000000000000000004], MockAirworthiness: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 1)
+    │   ├─ [379] MockAirworthiness::regulatoryAuthority() [staticcall]
+    │   │   └─ ← [Return] SHA-256: [0x0000000000000000000000000000000000000002]
+    │   ├─ [436] MockAirworthiness::isCertified(1) [staticcall]
+    │   │   └─ ← [Return] true
+    │   ├─ emit Transfer(from: 0x0000000000000000000000000000000000000000, to: SHA-256: [0x0000000000000000000000000000000000000002], tokenId: 1)
+    │   ├─ emit MetadataUpdate(_tokenId: 1)
+    │   ├─ emit CertificateMinted(tokenId: 1, ctype: 0, issuer: Identity: [0x0000000000000000000000000000000000000004], metadataURI: "ipfs://certificate-metadata")
+    │   └─ ← [Stop] 
+    ├─ [638] CertificateNFT::ownerOf(1) [staticcall]
+    │   └─ ← [Return] SHA-256: [0x0000000000000000000000000000000000000002]
+    ├─ [0] VM::assertEq(SHA-256: [0x0000000000000000000000000000000000000002], SHA-256: [0x0000000000000000000000000000000000000002]) [staticcall]
+    │   └─ ← [Return] 
+    ├─ [750] CertificateNFT::getIssuer(1) [staticcall]
+    │   └─ ← [Return] Identity: [0x0000000000000000000000000000000000000004]
+    ├─ [0] VM::assertEq(Identity: [0x0000000000000000000000000000000000000004], Identity: [0x0000000000000000000000000000000000000004]) [staticcall]
+    │   └─ ← [Return] 
+    ├─ [808] CertificateNFT::getCertificateType(1) [staticcall]
+    │   └─ ← [Return] 0
+    ├─ [0] VM::assertEq(0, 0) [staticcall]
+    │   └─ ← [Return] 
+    ├─ [783] CertificateNFT::isValid(1) [staticcall]
+    │   └─ ← [Return] true
+    ├─ [0] VM::assertTrue(true) [staticcall]
+    │   └─ ← [Return] 
+    └─ ← [Stop] 
+
+[PASS] test_ShouldAllowIssuerToRevokeCertificate() (gas: 242302)
+Traces:
+  [242302] CertificateNFTTest::test_ShouldAllowIssuerToRevokeCertificate()
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [24537] MockAirworthiness::certifyApplication(1)
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [190083] CertificateNFT::mintCertificate("ipfs://certificate-metadata", 0, Identity: [0x0000000000000000000000000000000000000004], MockAirworthiness: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 1)
+    │   ├─ [379] MockAirworthiness::regulatoryAuthority() [staticcall]
+    │   │   └─ ← [Return] SHA-256: [0x0000000000000000000000000000000000000002]
+    │   ├─ [436] MockAirworthiness::isCertified(1) [staticcall]
+    │   │   └─ ← [Return] true
+    │   ├─ emit Transfer(from: 0x0000000000000000000000000000000000000000, to: SHA-256: [0x0000000000000000000000000000000000000002], tokenId: 1)
+    │   ├─ emit MetadataUpdate(_tokenId: 1)
+    │   ├─ emit CertificateMinted(tokenId: 1, ctype: 0, issuer: Identity: [0x0000000000000000000000000000000000000004], metadataURI: "ipfs://certificate-metadata")
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(Identity: [0x0000000000000000000000000000000000000004])
+    │   └─ ← [Return] 
+    ├─ [2384] CertificateNFT::revokeCertificate(1)
+    │   ├─ emit CertificateRevoked(tokenId: 1, issuer: Identity: [0x0000000000000000000000000000000000000004])
+    │   └─ ← [Stop] 
+    ├─ [783] CertificateNFT::isValid(1) [staticcall]
+    │   └─ ← [Return] false
+    ├─ [0] VM::assertFalse(false) [staticcall]
+    │   └─ ← [Return] 
+    └─ ← [Stop] 
+
+[PASS] test_ShouldCheckCertificateValidity() (gas: 238983)
+Traces:
+  [238983] CertificateNFTTest::test_ShouldCheckCertificateValidity()
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [24537] MockAirworthiness::certifyApplication(1)
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [190083] CertificateNFT::mintCertificate("ipfs://certificate-metadata", 0, Identity: [0x0000000000000000000000000000000000000004], MockAirworthiness: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 1)
+    │   ├─ [379] MockAirworthiness::regulatoryAuthority() [staticcall]
+    │   │   └─ ← [Return] SHA-256: [0x0000000000000000000000000000000000000002]
+    │   ├─ [436] MockAirworthiness::isCertified(1) [staticcall]
+    │   │   └─ ← [Return] true
+    │   ├─ emit Transfer(from: 0x0000000000000000000000000000000000000000, to: SHA-256: [0x0000000000000000000000000000000000000002], tokenId: 1)
+    │   ├─ emit MetadataUpdate(_tokenId: 1)
+    │   ├─ emit CertificateMinted(tokenId: 1, ctype: 0, issuer: Identity: [0x0000000000000000000000000000000000000004], metadataURI: "ipfs://certificate-metadata")
+    │   └─ ← [Stop] 
+    ├─ [783] CertificateNFT::isValid(1) [staticcall]
+    │   └─ ← [Return] true
+    ├─ [0] VM::assertTrue(true) [staticcall]
+    │   └─ ← [Return] 
+    └─ ← [Stop] 
+
+[PASS] test_ShouldFailIfNonAuthorityTriesToMint() (gas: 22679)
+Traces:
+  [22679] CertificateNFTTest::test_ShouldFailIfNonAuthorityTriesToMint()
+    ├─ [0] VM::prank(RIPEMD-160: [0x0000000000000000000000000000000000000003])
+    │   └─ ← [Return] 
+    ├─ [0] VM::expectRevert(custom error 0xf28dceb3:  Caller is not an authority)
+    │   └─ ← [Return] 
+    ├─ [3274] CertificateNFT::mintCertificate("ipfs://certificate-metadata", 0, Identity: [0x0000000000000000000000000000000000000004], MockAirworthiness: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 1)
+    │   └─ ← [Revert] revert: Caller is not an authority
+    └─ ← [Stop] 
+
+[PASS] test_ShouldFailIfNonIssuerTriesToRevoke() (gas: 241465)
+Traces:
+  [241465] CertificateNFTTest::test_ShouldFailIfNonIssuerTriesToRevoke()
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [24537] MockAirworthiness::certifyApplication(1)
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [190083] CertificateNFT::mintCertificate("ipfs://certificate-metadata", 0, Identity: [0x0000000000000000000000000000000000000004], MockAirworthiness: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 1)
+    │   ├─ [379] MockAirworthiness::regulatoryAuthority() [staticcall]
+    │   │   └─ ← [Return] SHA-256: [0x0000000000000000000000000000000000000002]
+    │   ├─ [436] MockAirworthiness::isCertified(1) [staticcall]
+    │   │   └─ ← [Return] true
+    │   ├─ emit Transfer(from: 0x0000000000000000000000000000000000000000, to: SHA-256: [0x0000000000000000000000000000000000000002], tokenId: 1)
+    │   ├─ emit MetadataUpdate(_tokenId: 1)
+    │   ├─ emit CertificateMinted(tokenId: 1, ctype: 0, issuer: Identity: [0x0000000000000000000000000000000000000004], metadataURI: "ipfs://certificate-metadata")
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(RIPEMD-160: [0x0000000000000000000000000000000000000003])
+    │   └─ ← [Return] 
+    ├─ [0] VM::expectRevert(custom error 0xf28dceb3:  +Only the issuer can revoke this certificate)
+    │   └─ ← [Return] 
+    ├─ [844] CertificateNFT::revokeCertificate(1)
+    │   └─ ← [Revert] revert: Only the issuer can revoke this certificate
+    └─ ← [Stop] 
+
+[PASS] test_ShouldFailToMintCertificateIfApplicationNotCertified() (gas: 31068)
+Traces:
+  [31068] CertificateNFTTest::test_ShouldFailToMintCertificateIfApplicationNotCertified()
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [0] VM::expectRevert(custom error 0xf28dceb3:  4Application ID does not exist in the linked contract)
+    │   └─ ← [Return] 
+    ├─ [11587] CertificateNFT::mintCertificate("ipfs://certificate-metadata", 0, Identity: [0x0000000000000000000000000000000000000004], MockAirworthiness: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 1)
+    │   ├─ [2379] MockAirworthiness::regulatoryAuthority() [staticcall]
+    │   │   └─ ← [Return] SHA-256: [0x0000000000000000000000000000000000000002]
+    │   ├─ [2436] MockAirworthiness::isCertified(1) [staticcall]
+    │   │   └─ ← [Return] false
+    │   └─ ← [Revert] revert: Application ID does not exist in the linked contract
+    └─ ← [Stop] 
+
+[PASS] test_ShouldRetrieveCertificateType() (gas: 237295)
+Traces:
+  [237295] CertificateNFTTest::test_ShouldRetrieveCertificateType()
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [24537] MockAirworthiness::certifyApplication(1)
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [188339] CertificateNFT::mintCertificate("ipfs://certificate-metadata", 1, Identity: [0x0000000000000000000000000000000000000004], MockAirworthiness: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 1)
+    │   ├─ emit Transfer(from: 0x0000000000000000000000000000000000000000, to: SHA-256: [0x0000000000000000000000000000000000000002], tokenId: 1)
+    │   ├─ emit MetadataUpdate(_tokenId: 1)
+    │   ├─ emit CertificateMinted(tokenId: 1, ctype: 1, issuer: Identity: [0x0000000000000000000000000000000000000004], metadataURI: "ipfs://certificate-metadata")
+    │   └─ ← [Stop] 
+    ├─ [808] CertificateNFT::getCertificateType(1) [staticcall]
+    │   └─ ← [Return] 1
+    ├─ [0] VM::assertEq(1, 1) [staticcall]
+    │   └─ ← [Return] 
+    └─ ← [Stop] 
+
+[PASS] test_ShouldRetrieveIssuer() (gas: 237398)
+Traces:
+  [237398] CertificateNFTTest::test_ShouldRetrieveIssuer()
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [24537] MockAirworthiness::certifyApplication(1)
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [188339] CertificateNFT::mintCertificate("ipfs://certificate-metadata", 2, Identity: [0x0000000000000000000000000000000000000004], MockAirworthiness: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 1)
+    │   ├─ emit Transfer(from: 0x0000000000000000000000000000000000000000, to: SHA-256: [0x0000000000000000000000000000000000000002], tokenId: 1)
+    │   ├─ emit MetadataUpdate(_tokenId: 1)
+    │   ├─ emit CertificateMinted(tokenId: 1, ctype: 2, issuer: Identity: [0x0000000000000000000000000000000000000004], metadataURI: "ipfs://certificate-metadata")
+    │   └─ ← [Stop] 
+    ├─ [750] CertificateNFT::getIssuer(1) [staticcall]
+    │   └─ ← [Return] Identity: [0x0000000000000000000000000000000000000004]
+    ├─ [0] VM::assertEq(Identity: [0x0000000000000000000000000000000000000004], Identity: [0x0000000000000000000000000000000000000004]) [staticcall]
+    │   └─ ← [Return] 
+    └─ ← [Stop] 
+
+Suite result: ok. 8 passed; 0 failed; 0 skipped; finished in 941.48µs (980.40µs CPU time)
+
+Ran 6 tests for tests/UAVPassportNFT.t.sol:UAVPassportNFTTest
+[PASS] test_ShouldAllowAuthorityToLinkCertificate() (gas: 317094)
+Traces:
+  [317094] UAVPassportNFTTest::test_ShouldAllowAuthorityToLinkCertificate()
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [169455] UAVPassportNFT::mintUAV("UAV-123", 0x0000000000000000000000000000000000000000, 0, "ipfs://metadata")
+    │   ├─ emit Transfer(from: 0x0000000000000000000000000000000000000000, to: SHA-256: [0x0000000000000000000000000000000000000002], tokenId: 1)
+    │   ├─ emit UAVMinted(tokenId: 1, manufacturer: SHA-256: [0x0000000000000000000000000000000000000002], ipfsMetadataCID: "ipfs://metadata")
+    │   └─ ← [Stop] 
+    ├─ [660] UAVPassportNFT::ownerOf(1) [staticcall]
+    │   └─ ← [Return] SHA-256: [0x0000000000000000000000000000000000000002]
+    ├─ [0] VM::assertEq(SHA-256: [0x0000000000000000000000000000000000000002], SHA-256: [0x0000000000000000000000000000000000000002], "UAV owner is incorrect") [staticcall]
+    │   └─ ← [Return] 
+    ├─ [335] UAVPassportNFT::AUTHORITY_ROLE() [staticcall]
+    │   └─ ← [Return] 0xd565e3fc066df348a5cbc05a8d6323e00552838041cea2d84cc59876ba37735d
+    ├─ [2761] UAVPassportNFT::hasRole(0xd565e3fc066df348a5cbc05a8d6323e00552838041cea2d84cc59876ba37735d, RIPEMD-160: [0x0000000000000000000000000000000000000003]) [staticcall]
+    │   └─ ← [Return] true
+    ├─ [0] VM::assertTrue(true, "Regulatory authority missing AUTHORITY_ROLE") [staticcall]
+    │   └─ ← [Return] 
+    ├─ [0] VM::prank(RIPEMD-160: [0x0000000000000000000000000000000000000003])
+    │   └─ ← [Return] 
+    ├─ [22550] MockCertificateNFT::setOwner(1, RIPEMD-160: [0x0000000000000000000000000000000000000003])
+    │   └─ ← [Stop] 
+    ├─ [2671] MockCertificateNFT::setCertificateType(1, 0)
+    │   └─ ← [Stop] 
+    ├─ [511] MockCertificateNFT::ownerOf(1) [staticcall]
+    │   └─ ← [Return] RIPEMD-160: [0x0000000000000000000000000000000000000003]
+    ├─ [0] VM::assertEq(RIPEMD-160: [0x0000000000000000000000000000000000000003], RIPEMD-160: [0x0000000000000000000000000000000000000003], "Mock contract is not returning the expected owner") [staticcall]
+    │   └─ ← [Return] 
+    ├─ [0] VM::prank(RIPEMD-160: [0x0000000000000000000000000000000000000003])
+    │   └─ ← [Return] 
+    ├─ [77386] UAVPassportNFT::linkCertificate(1, MockCertificateNFT: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 1)
+    │   ├─ [511] MockCertificateNFT::ownerOf(1) [staticcall]
+    │   │   └─ ← [Return] RIPEMD-160: [0x0000000000000000000000000000000000000003]
+    │   ├─ [554] MockCertificateNFT::getCertificateType(1) [staticcall]
+    │   │   └─ ← [Return] 0
+    │   ├─ emit CertificateLinked(tokenId: 1, ctype: 0, certificateContract: MockCertificateNFT: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], certificateTokenId: 1)
+    │   ├─ [2913] MockCertificateNFT::safeTransferFrom(RIPEMD-160: [0x0000000000000000000000000000000000000003], UAVPassportNFT: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f], 1)
+    │   │   ├─ emit Transfer(from: RIPEMD-160: [0x0000000000000000000000000000000000000003], to: UAVPassportNFT: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f], tokenId: 1)
+    │   │   └─ ← [Stop] 
+    │   └─ ← [Stop] 
+    ├─ [511] MockCertificateNFT::ownerOf(1) [staticcall]
+    │   └─ ← [Return] UAVPassportNFT: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f]
+    ├─ [0] VM::assertEq(UAVPassportNFT: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f], UAVPassportNFT: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f], "UAVPassportNFT contract did not receive ownership of the certificate") [staticcall]
+    │   └─ ← [Return] 
+    ├─ [1933] UAVPassportNFT::getLinkedCertificates(1) [staticcall]
+    │   └─ ← [Return] [LinkedCertificate({ certificateContract: 0x2e234DAe75C793f67A35089C9d99245E1C58470b, certificateTokenId: 1, ctype: 0 })]
+    ├─ [0] VM::assertEq(MockCertificateNFT: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], MockCertificateNFT: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], "Certificate contract mismatch") [staticcall]
+    │   └─ ← [Return] 
+    ├─ [0] VM::assertEq(1, 1, "Certificate token ID mismatch") [staticcall]
+    │   └─ ← [Return] 
+    └─ ← [Stop] 
+
+[PASS] test_ShouldAllowAuthorityToRecordImportExport() (gas: 244322)
+Traces:
+  [244322] UAVPassportNFTTest::test_ShouldAllowAuthorityToRecordImportExport()
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [169455] UAVPassportNFT::mintUAV("UAV-123", 0x0000000000000000000000000000000000000000, 0, "ipfs://metadata")
+    │   ├─ emit Transfer(from: 0x0000000000000000000000000000000000000000, to: SHA-256: [0x0000000000000000000000000000000000000002], tokenId: 1)
+    │   ├─ emit UAVMinted(tokenId: 1, manufacturer: SHA-256: [0x0000000000000000000000000000000000000002], ipfsMetadataCID: "ipfs://metadata")
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(RIPEMD-160: [0x0000000000000000000000000000000000000003])
+    │   └─ ← [Return] 
+    ├─ [50160] UAVPassportNFT::recordImportExport(1, "US")
+    │   ├─ emit ImportExportRecorded(tokenId: 1, jurisdictionIdentifier: "US")
+    │   └─ ← [Stop] 
+    ├─ [2201] UAVPassportNFT::getImportExportTrace(1) [staticcall]
+    │   └─ ← [Return] ["US"]
+    ├─ [0] VM::assertEq(0x627fe66dd064a0a7d686e05b87b04d5a7c585907afae1f0c65ab27fa379ca189, 0x627fe66dd064a0a7d686e05b87b04d5a7c585907afae1f0c65ab27fa379ca189) [staticcall]
+    │   └─ ← [Return] 
+    └─ ← [Stop] 
+
+[PASS] test_ShouldAllowManufacturerToMintUAV() (gas: 195487)
+Traces:
+  [195487] UAVPassportNFTTest::test_ShouldAllowManufacturerToMintUAV()
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [169455] UAVPassportNFT::mintUAV("UAV-123", 0x0000000000000000000000000000000000000000, 0, "ipfs://metadata")
+    │   ├─ emit Transfer(from: 0x0000000000000000000000000000000000000000, to: SHA-256: [0x0000000000000000000000000000000000000002], tokenId: 1)
+    │   ├─ emit UAVMinted(tokenId: 1, manufacturer: SHA-256: [0x0000000000000000000000000000000000000002], ipfsMetadataCID: "ipfs://metadata")
+    │   └─ ← [Stop] 
+    ├─ [3507] UAVPassportNFT::getUAVData(1) [staticcall]
+    │   └─ ← [Return] UAVData({ tokenId: 1, serialNumber: "UAV-123", typeCertificateContract: 0x0000000000000000000000000000000000000000, typeCertificateApplicationId: 0, ipfsMetadataCID: "ipfs://metadata", owner: 0x0000000000000000000000000000000000000002 })
+    ├─ [0] VM::assertEq(1, 1) [staticcall]
+    │   └─ ← [Return] 
+    ├─ [0] VM::assertEq("UAV-123", "UAV-123") [staticcall]
+    │   └─ ← [Return] 
+    ├─ [0] VM::assertEq(SHA-256: [0x0000000000000000000000000000000000000002], SHA-256: [0x0000000000000000000000000000000000000002]) [staticcall]
+    │   └─ ← [Return] 
+    ├─ [0] VM::assertEq(0x573d5e91ce4505f0968237333e7faa29e5b3db0271bd53ca845f6d06315880d0, 0x573d5e91ce4505f0968237333e7faa29e5b3db0271bd53ca845f6d06315880d0) [staticcall]
+    │   └─ ← [Return] 
+    └─ ← [Stop] 
+
+[PASS] test_ShouldAllowOwnerToTransferUAV() (gas: 206477)
+Traces:
+  [226377] UAVPassportNFTTest::test_ShouldAllowOwnerToTransferUAV()
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [169455] UAVPassportNFT::mintUAV("UAV-123", 0x0000000000000000000000000000000000000000, 0, "ipfs://metadata")
+    │   ├─ emit Transfer(from: 0x0000000000000000000000000000000000000000, to: SHA-256: [0x0000000000000000000000000000000000000002], tokenId: 1)
+    │   ├─ emit UAVMinted(tokenId: 1, manufacturer: SHA-256: [0x0000000000000000000000000000000000000002], ipfsMetadataCID: "ipfs://metadata")
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [30644] UAVPassportNFT::transferUAV(Identity: [0x0000000000000000000000000000000000000004], 1)
+    │   ├─ emit Transfer(from: SHA-256: [0x0000000000000000000000000000000000000002], to: Identity: [0x0000000000000000000000000000000000000004], tokenId: 1)
+    │   ├─ emit OwnershipTransferred(tokenId: 1, previousOwner: SHA-256: [0x0000000000000000000000000000000000000002], newOwner: Identity: [0x0000000000000000000000000000000000000004])
+    │   └─ ← [Stop] 
+    ├─ [3507] UAVPassportNFT::getUAVData(1) [staticcall]
+    │   └─ ← [Return] UAVData({ tokenId: 1, serialNumber: "UAV-123", typeCertificateContract: 0x0000000000000000000000000000000000000000, typeCertificateApplicationId: 0, ipfsMetadataCID: "ipfs://metadata", owner: 0x0000000000000000000000000000000000000004 })
+    ├─ [0] VM::assertEq(Identity: [0x0000000000000000000000000000000000000004], Identity: [0x0000000000000000000000000000000000000004]) [staticcall]
+    │   └─ ← [Return] 
+    └─ ← [Stop] 
+
+[PASS] test_ShouldFailIfNonAuthorityTriesToLinkCertificate() (gas: 197179)
+Traces:
+  [197179] UAVPassportNFTTest::test_ShouldFailIfNonAuthorityTriesToLinkCertificate()
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [169455] UAVPassportNFT::mintUAV("UAV-123", 0x0000000000000000000000000000000000000000, 0, "ipfs://metadata")
+    │   ├─ emit Transfer(from: 0x0000000000000000000000000000000000000000, to: SHA-256: [0x0000000000000000000000000000000000000002], tokenId: 1)
+    │   ├─ emit UAVMinted(tokenId: 1, manufacturer: SHA-256: [0x0000000000000000000000000000000000000002], ipfsMetadataCID: "ipfs://metadata")
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(ModExp: [0x0000000000000000000000000000000000000005])
+    │   └─ ← [Return] 
+    ├─ [0] VM::expectRevert(custom error 0xf28dceb3:  Caller is not an authority)
+    │   └─ ← [Return] 
+    ├─ [2883] UAVPassportNFT::linkCertificate(1, MockCertificateNFT: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 1)
+    │   └─ ← [Revert] revert: Caller is not an authority
+    └─ ← [Stop] 
+
+[PASS] test_ShouldFailIfNonAuthorityTriesToRecordImportExport() (gas: 193233)
+Traces:
+  [193233] UAVPassportNFTTest::test_ShouldFailIfNonAuthorityTriesToRecordImportExport()
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [169455] UAVPassportNFT::mintUAV("UAV-123", 0x0000000000000000000000000000000000000000, 0, "ipfs://metadata")
+    │   ├─ emit Transfer(from: 0x0000000000000000000000000000000000000000, to: SHA-256: [0x0000000000000000000000000000000000000002], tokenId: 1)
+    │   ├─ emit UAVMinted(tokenId: 1, manufacturer: SHA-256: [0x0000000000000000000000000000000000000002], ipfsMetadataCID: "ipfs://metadata")
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(ModExp: [0x0000000000000000000000000000000000000005])
+    │   └─ ← [Return] 
+    ├─ [0] VM::expectRevert(custom error 0xf28dceb3:  Caller is not an authority)
+    │   └─ ← [Return] 
+    ├─ [3187] UAVPassportNFT::recordImportExport(1, "FR")
+    │   └─ ← [Revert] revert: Caller is not an authority
+    └─ ← [Stop] 
+
+Suite result: ok. 6 passed; 0 failed; 0 skipped; finished in 969.16µs (969.57µs CPU time)
+
+Ran 6 tests for tests/Airworthiness.t.sol:AirworthinessTest
+[PASS] test_ShouldAllowOnlyRegulatoryToCompleteInspection() (gas: 22655)
+Traces:
+  [22655] Should allow only the regulatory authority to complete an inspection::test_ShouldAllowOnlyRegulatoryToCompleteInspection()
+    ├─ [0] VM::label(Should allow only the regulatory authority to complete an inspection: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], "Should allow only the regulatory authority to complete an inspection")
+    │   └─ ← [Return] 
+    ├─ [0] VM::startPrank(RIPEMD-160: [0x0000000000000000000000000000000000000003])
+    │   └─ ← [Return] 
+    ├─ [0] VM::expectRevert(custom error 0xf28dceb3:  !Only regulatory authority allowed)
+    │   └─ ← [Return] 
+    ├─ [2878] Airworthiness::completeInspection(1, "ipfs://inspection-report")
+    │   └─ ← [Revert] revert: Only regulatory authority allowed
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return] 
+    ├─ [0] VM::startPrank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [4871] Airworthiness::completeInspection(1, "ipfs://inspection-report")
+    │   ├─ emit InspectionCompleted(applicationId: 1, inspectionReportHash: "ipfs://inspection-report")
+    │   └─ ← [Stop] 
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return] 
+    └─ ← [Stop] 
+
+[PASS] test_ShouldAllowOnlyRegulatoryToIssueCertificate() (gas: 173703)
+Traces:
+  [173703] Should allow only the regulator to issue an airworthiness certificate::test_ShouldAllowOnlyRegulatoryToIssueCertificate()
+    ├─ [0] VM::label(Should allow only the regulator to issue an airworthiness certificate: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], "Should allow only the regulator to issue an airworthiness certificate")
+    │   └─ ← [Return] 
+    ├─ [0] VM::startPrank(ECRecover: [0x0000000000000000000000000000000000000001])
+    │   └─ ← [Return] 
+    ├─ [121250] Airworthiness::submitApplication(MockUAVPassportNFT: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 1, "ipfs://test-docs")
+    │   ├─ [2465] MockUAVPassportNFT::ownerOf(1) [staticcall]
+    │   │   └─ ← [Return] ECRecover: [0x0000000000000000000000000000000000000001]
+    │   ├─ emit ApplicationSubmitted(applicationId: 1)
+    │   └─ ← [Stop] 
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return] 
+    ├─ [0] VM::startPrank(ECRecover: [0x0000000000000000000000000000000000000001])
+    │   └─ ← [Return] 
+    ├─ [0] VM::expectRevert(custom error 0xf28dceb3:  !Only regulatory authority allowed)
+    │   └─ ← [Return] 
+    ├─ [2879] Airworthiness::issueCertificate(1, "ipfs://certificate")
+    │   └─ ← [Revert] revert: Only regulatory authority allowed
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return] 
+    ├─ [0] VM::startPrank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [25364] Airworthiness::issueCertificate(1, "ipfs://certificate")
+    │   ├─ emit CertificateIssued(applicationId: 1, airworthinessCertificateHash: "ipfs://certificate")
+    │   └─ ← [Stop] 
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return] 
+    ├─ [1960] Airworthiness::applications(1) [staticcall]
+    │   └─ ← [Return] 1, MockUAVPassportNFT: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 1, "ipfs://test-docs", 1
+    ├─ [0] VM::assertEq(1, 1) [staticcall]
+    │   └─ ← [Return] 
+    └─ ← [Stop] 
+
+[PASS] test_ShouldAllowUAVOwnerToSubmitApplication() (gas: 141692)
+Traces:
+  [141692] Should allow the UAV owner to submit an application::test_ShouldAllowUAVOwnerToSubmitApplication()
+    ├─ [0] VM::label(Should allow the UAV owner to submit an application: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], "Should allow the UAV owner to submit an application")
+    │   └─ ← [Return] 
+    ├─ [0] VM::startPrank(ECRecover: [0x0000000000000000000000000000000000000001])
+    │   └─ ← [Return] 
+    ├─ [121250] Airworthiness::submitApplication(MockUAVPassportNFT: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 1, "ipfs://test-docs")
+    │   ├─ [2465] MockUAVPassportNFT::ownerOf(1) [staticcall]
+    │   │   └─ ← [Return] ECRecover: [0x0000000000000000000000000000000000000001]
+    │   ├─ emit ApplicationSubmitted(applicationId: 1)
+    │   └─ ← [Stop] 
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return] 
+    ├─ [1960] Airworthiness::applications(1) [staticcall]
+    │   └─ ← [Return] 1, MockUAVPassportNFT: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 1, "ipfs://test-docs", 0
+    ├─ [0] VM::assertEq(1, 1) [staticcall]
+    │   └─ ← [Return] 
+    ├─ [0] VM::assertEq(1, 1) [staticcall]
+    │   └─ ← [Return] 
+    ├─ [0] VM::assertEq(0, 0) [staticcall]
+    │   └─ ← [Return] 
+    ├─ [0] VM::assertEq(0x5c48f338c4d7afa381a1119fd43b5921db30b6c42d20d75a46e776853d586ff3, 0x5c48f338c4d7afa381a1119fd43b5921db30b6c42d20d75a46e776853d586ff3) [staticcall]
+    │   └─ ← [Return] 
+    └─ ← [Stop] 
+
+[PASS] test_ShouldCorrectlyRetrieveCertificationStatus() (gas: 168608)
+Traces:
+  [168608] Should correctly retrieve certification status::test_ShouldCorrectlyRetrieveCertificationStatus()
+    ├─ [0] VM::label(Should correctly retrieve certification status: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], "Should correctly retrieve certification status")
+    │   └─ ← [Return] 
+    ├─ [0] VM::startPrank(ECRecover: [0x0000000000000000000000000000000000000001])
+    │   └─ ← [Return] 
+    ├─ [121250] Airworthiness::submitApplication(MockUAVPassportNFT: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 1, "ipfs://test-docs")
+    │   ├─ [2465] MockUAVPassportNFT::ownerOf(1) [staticcall]
+    │   │   └─ ← [Return] ECRecover: [0x0000000000000000000000000000000000000001]
+    │   ├─ emit ApplicationSubmitted(applicationId: 1)
+    │   └─ ← [Stop] 
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return] 
+    ├─ [652] Airworthiness::isCertified(1) [staticcall]
+    │   └─ ← [Return] false
+    ├─ [0] VM::assertEq(false, false) [staticcall]
+    │   └─ ← [Return] 
+    ├─ [0] VM::startPrank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [25364] Airworthiness::issueCertificate(1, "ipfs://certificate")
+    │   ├─ emit CertificateIssued(applicationId: 1, airworthinessCertificateHash: "ipfs://certificate")
+    │   └─ ← [Stop] 
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return] 
+    ├─ [652] Airworthiness::isCertified(1) [staticcall]
+    │   └─ ← [Return] true
+    ├─ [0] VM::assertEq(true, true) [staticcall]
+    │   └─ ← [Return] 
+    └─ ← [Stop] 
+
+[PASS] test_ShouldNotAllowIssuingCertificateBeforeApplication() (gas: 16621)
+Traces:
+  [16621] Should not allow issuing a certificate before submitting an application::test_ShouldNotAllowIssuingCertificateBeforeApplication()
+    ├─ [0] VM::label(Should not allow issuing a certificate before submitting an application: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], "Should not allow issuing a certificate before submitting an application")
+    │   └─ ← [Return] 
+    ├─ [0] VM::startPrank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [0] VM::expectRevert(custom error 0xf28dceb3:  Application does not exist)
+    │   └─ ← [Return] 
+    ├─ [5028] Airworthiness::issueCertificate(99, "ipfs://certificate")
+    │   └─ ← [Revert] revert: Application does not exist
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return] 
+    └─ ← [Stop] 
+
+[PASS] test_ShouldReturnFalseForNonExistentApplications() (gas: 11097)
+Traces:
+  [11097] Should return false for non-existent applications in isCertified::test_ShouldReturnFalseForNonExistentApplications()
+    ├─ [0] VM::label(Should return false for non-existent applications in isCertified: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], "Should return false for non-existent applications in isCertified")
+    │   └─ ← [Return] 
+    ├─ [2503] Airworthiness::isCertified(999) [staticcall]
+    │   └─ ← [Return] false
+    ├─ [0] VM::assertEq(false, false) [staticcall]
+    │   └─ ← [Return] 
+    └─ ← [Stop] 
+
+Suite result: ok. 6 passed; 0 failed; 0 skipped; finished in 675.32µs (606.89µs CPU time)
+
+Ran 7 tests for tests/TypeCertificate.t.sol:TypeCertificateTest
+[PASS] test_ShouldAllowManufacturerToSubmitApplication() (gas: 142493)
+Traces:
+  [142493] TypeCertificateTest::test_ShouldAllowManufacturerToSubmitApplication()
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [118932] TypeCertificate::submitApplication("ipfs://initial-docs", 0x9c53fb92ea72364b647194a1f9769c0b46719b65272f7def856ff45deec5166b)
+    │   ├─ emit ApplicationSubmitted(applicationId: 1, manufacturer: SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Stop] 
+    ├─ [3418] TypeCertificate::getApplication(1) [staticcall]
+    │   └─ ← [Return] Application({ id: 1, manufacturer: 0x0000000000000000000000000000000000000002, ipfsDirectoryCID: "ipfs://initial-docs", droneSpecDocumentHash: 0x9c53fb92ea72364b647194a1f9769c0b46719b65272f7def856ff45deec5166b, status: 0, assignedNotifiedBody: 0x0000000000000000000000000000000000000000, notifiedBodyReportCID: "" })
+    ├─ [0] VM::assertEq(1, 1) [staticcall]
+    │   └─ ← [Return] 
+    ├─ [0] VM::assertEq(SHA-256: [0x0000000000000000000000000000000000000002], SHA-256: [0x0000000000000000000000000000000000000002]) [staticcall]
+    │   └─ ← [Return] 
+    ├─ [0] VM::assertEq(0, 0) [staticcall]
+    │   └─ ← [Return] 
+    └─ ← [Stop] 
+
+[PASS] test_ShouldAllowManufacturerToUpdateDocuments() (gas: 146310)
+Traces:
+  [146310] TypeCertificateTest::test_ShouldAllowManufacturerToUpdateDocuments()
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [118932] TypeCertificate::submitApplication("ipfs://initial-docs", 0x9c53fb92ea72364b647194a1f9769c0b46719b65272f7def856ff45deec5166b)
+    │   ├─ emit ApplicationSubmitted(applicationId: 1, manufacturer: SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [3076] TypeCertificate::updateDocuments(1, "ipfs://updated-docs", 0x40ea2357816abdad387f9f8c298e004d7fd20fd52718f604994e4712833823b8)
+    │   ├─ emit DocumentsUpdated(applicationId: 1)
+    │   └─ ← [Stop] 
+    ├─ [3418] TypeCertificate::getApplication(1) [staticcall]
+    │   └─ ← [Return] Application({ id: 1, manufacturer: 0x0000000000000000000000000000000000000002, ipfsDirectoryCID: "ipfs://updated-docs", droneSpecDocumentHash: 0x40ea2357816abdad387f9f8c298e004d7fd20fd52718f604994e4712833823b8, status: 0, assignedNotifiedBody: 0x0000000000000000000000000000000000000000, notifiedBodyReportCID: "" })
+    ├─ [0] VM::assertEq(0x47a8d085c8e8ca4c14b95757e117b4ab83e2ee477f19bafd594a7235e373bd19, 0x47a8d085c8e8ca4c14b95757e117b4ab83e2ee477f19bafd594a7235e373bd19) [staticcall]
+    │   └─ ← [Return] 
+    ├─ [0] VM::assertEq(0x40ea2357816abdad387f9f8c298e004d7fd20fd52718f604994e4712833823b8, 0x40ea2357816abdad387f9f8c298e004d7fd20fd52718f604994e4712833823b8) [staticcall]
+    │   └─ ← [Return] 
+    └─ ← [Stop] 
+
+[PASS] test_ShouldAllowNotifiedBodyToCompleteInspection() (gas: 203947)
+Traces:
+  [203947] TypeCertificateTest::test_ShouldAllowNotifiedBodyToCompleteInspection()
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [118932] TypeCertificate::submitApplication("ipfs://initial-docs", 0x9c53fb92ea72364b647194a1f9769c0b46719b65272f7def856ff45deec5166b)
+    │   ├─ emit ApplicationSubmitted(applicationId: 1, manufacturer: SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(ECRecover: [0x0000000000000000000000000000000000000001])
+    │   └─ ← [Return] 
+    ├─ [25264] TypeCertificate::approveDocuments(1, "ipfs://certification-specs")
+    │   ├─ emit DocumentsApproved(applicationId: 1, csCID: "ipfs://certification-specs")
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [3480] TypeCertificate::requestTypeExamination(1, "ipfs://internal-report")
+    │   ├─ emit ExaminationRequested(applicationId: 1, internalReportCID: "ipfs://internal-report")
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(RIPEMD-160: [0x0000000000000000000000000000000000000003])
+    │   └─ ← [Return] 
+    ├─ [25441] TypeCertificate::completeInspection(1, "ipfs://inspection-report")
+    │   ├─ emit InspectionCompleted(applicationId: 1, notifiedBody: RIPEMD-160: [0x0000000000000000000000000000000000000003])
+    │   └─ ← [Stop] 
+    ├─ [3597] TypeCertificate::getApplication(1) [staticcall]
+    │   └─ ← [Return] Application({ id: 1, manufacturer: 0x0000000000000000000000000000000000000002, ipfsDirectoryCID: "ipfs://initial-docs", droneSpecDocumentHash: 0x9c53fb92ea72364b647194a1f9769c0b46719b65272f7def856ff45deec5166b, status: 2, assignedNotifiedBody: 0x0000000000000000000000000000000000000003, notifiedBodyReportCID: "ipfs://inspection-report" })
+    ├─ [0] VM::assertEq(RIPEMD-160: [0x0000000000000000000000000000000000000003], RIPEMD-160: [0x0000000000000000000000000000000000000003]) [staticcall]
+    │   └─ ← [Return] 
+    ├─ [0] VM::assertEq(0x9378cba2e7c4e1dad348a5b505f0226e24f49781e349e406d98919f06820e821, 0x9378cba2e7c4e1dad348a5b505f0226e24f49781e349e406d98919f06820e821) [staticcall]
+    │   └─ ← [Return] 
+    └─ ← [Stop] 
+
+[PASS] test_ShouldAllowRegulatoryAuthorityToApproveDocuments() (gas: 169944)
+Traces:
+  [169944] TypeCertificateTest::test_ShouldAllowRegulatoryAuthorityToApproveDocuments()
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [118932] TypeCertificate::submitApplication("ipfs://initial-docs", 0x9c53fb92ea72364b647194a1f9769c0b46719b65272f7def856ff45deec5166b)
+    │   ├─ emit ApplicationSubmitted(applicationId: 1, manufacturer: SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(ECRecover: [0x0000000000000000000000000000000000000001])
+    │   └─ ← [Return] 
+    ├─ [25264] TypeCertificate::approveDocuments(1, "ipfs://certification-specs")
+    │   ├─ emit DocumentsApproved(applicationId: 1, csCID: "ipfs://certification-specs")
+    │   └─ ← [Stop] 
+    ├─ [3418] TypeCertificate::getApplication(1) [staticcall]
+    │   └─ ← [Return] Application({ id: 1, manufacturer: 0x0000000000000000000000000000000000000002, ipfsDirectoryCID: "ipfs://initial-docs", droneSpecDocumentHash: 0x9c53fb92ea72364b647194a1f9769c0b46719b65272f7def856ff45deec5166b, status: 1, assignedNotifiedBody: 0x0000000000000000000000000000000000000000, notifiedBodyReportCID: "" })
+    ├─ [0] VM::assertEq(1, 1) [staticcall]
+    │   └─ ← [Return] 
+    └─ ← [Stop] 
+
+[PASS] test_ShouldAllowRegulatoryAuthorityToIssueCertificate() (gas: 208046)
+Traces:
+  [208046] TypeCertificateTest::test_ShouldAllowRegulatoryAuthorityToIssueCertificate()
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [118932] TypeCertificate::submitApplication("ipfs://initial-docs", 0x9c53fb92ea72364b647194a1f9769c0b46719b65272f7def856ff45deec5166b)
+    │   ├─ emit ApplicationSubmitted(applicationId: 1, manufacturer: SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(ECRecover: [0x0000000000000000000000000000000000000001])
+    │   └─ ← [Return] 
+    ├─ [25264] TypeCertificate::approveDocuments(1, "ipfs://certification-specs")
+    │   ├─ emit DocumentsApproved(applicationId: 1, csCID: "ipfs://certification-specs")
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [3480] TypeCertificate::requestTypeExamination(1, "ipfs://internal-report")
+    │   ├─ emit ExaminationRequested(applicationId: 1, internalReportCID: "ipfs://internal-report")
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(RIPEMD-160: [0x0000000000000000000000000000000000000003])
+    │   └─ ← [Return] 
+    ├─ [25441] TypeCertificate::completeInspection(1, "ipfs://inspection-report")
+    │   ├─ emit InspectionCompleted(applicationId: 1, notifiedBody: RIPEMD-160: [0x0000000000000000000000000000000000000003])
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(ECRecover: [0x0000000000000000000000000000000000000001])
+    │   └─ ← [Return] 
+    ├─ [3619] TypeCertificate::issueCertificate(1, "ipfs://final-certificate")
+    │   ├─ emit CertificateIssued(applicationId: 1, airworthinessCertificateHash: "ipfs://final-certificate")
+    │   └─ ← [Stop] 
+    ├─ [3597] TypeCertificate::getApplication(1) [staticcall]
+    │   └─ ← [Return] Application({ id: 1, manufacturer: 0x0000000000000000000000000000000000000002, ipfsDirectoryCID: "ipfs://initial-docs", droneSpecDocumentHash: 0x9c53fb92ea72364b647194a1f9769c0b46719b65272f7def856ff45deec5166b, status: 3, assignedNotifiedBody: 0x0000000000000000000000000000000000000003, notifiedBodyReportCID: "ipfs://inspection-report" })
+    ├─ [0] VM::assertEq(3, 3) [staticcall]
+    │   └─ ← [Return] 
+    └─ ← [Stop] 
+
+[PASS] test_ShouldAllowRegulatoryAuthorityToRejectApplication() (gas: 168368)
+Traces:
+  [168368] TypeCertificateTest::test_ShouldAllowRegulatoryAuthorityToRejectApplication()
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [118932] TypeCertificate::submitApplication("ipfs://initial-docs", 0x9c53fb92ea72364b647194a1f9769c0b46719b65272f7def856ff45deec5166b)
+    │   ├─ emit ApplicationSubmitted(applicationId: 1, manufacturer: SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(ECRecover: [0x0000000000000000000000000000000000000001])
+    │   └─ ← [Return] 
+    ├─ [23940] TypeCertificate::rejectApplication(1)
+    │   ├─ emit ApplicationRejected(applicationId: 1)
+    │   └─ ← [Stop] 
+    ├─ [3418] TypeCertificate::getApplication(1) [staticcall]
+    │   └─ ← [Return] Application({ id: 1, manufacturer: 0x0000000000000000000000000000000000000002, ipfsDirectoryCID: "ipfs://initial-docs", droneSpecDocumentHash: 0x9c53fb92ea72364b647194a1f9769c0b46719b65272f7def856ff45deec5166b, status: 4, assignedNotifiedBody: 0x0000000000000000000000000000000000000000, notifiedBodyReportCID: "" })
+    ├─ [0] VM::assertEq(4, 4) [staticcall]
+    │   └─ ← [Return] 
+    └─ ← [Stop] 
+
+[PASS] test_ShouldFailIfNonOwnerTriesToUpdateDocuments() (gas: 140351)
+Traces:
+  [140351] TypeCertificateTest::test_ShouldFailIfNonOwnerTriesToUpdateDocuments()
+    ├─ [0] VM::prank(SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Return] 
+    ├─ [118932] TypeCertificate::submitApplication("ipfs://initial-docs", 0x9c53fb92ea72364b647194a1f9769c0b46719b65272f7def856ff45deec5166b)
+    │   ├─ emit ApplicationSubmitted(applicationId: 1, manufacturer: SHA-256: [0x0000000000000000000000000000000000000002])
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(Identity: [0x0000000000000000000000000000000000000004])
+    │   └─ ← [Return] 
+    ├─ [0] VM::expectRevert(custom error 0xf28dceb3:  Not authorized)
+    │   └─ ← [Return] 
+    ├─ [968] TypeCertificate::updateDocuments(1, "ipfs://updated-docs", 0x40ea2357816abdad387f9f8c298e004d7fd20fd52718f604994e4712833823b8)
+    │   └─ ← [Revert] revert: Not authorized
+    └─ ← [Stop] 
+
+Suite result: ok. 7 passed; 0 failed; 0 skipped; finished in 1.18ms (943.32µs CPU time)
+
+Ran 4 test suites in 3.54s (3.77ms CPU time): 27 tests passed, 0 failed, 0 skipped (27 total tests)
