@@ -1,0 +1,5 @@
+tests/bench/node_modules/
+tests/bench/bench_type_cert_with_keys.sh
+tests/bench/benchmarks_old.csv
+tests/bench/perf_out/
+tests/bench/benchmarks.csv
