@@ -1,0 +1,65 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "ownerOf",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/Airworthiness.sol": "UAVPassportNFTInterface"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/Airworthiness.sol": {
+			"keccak256": "0x7fc4730b30acb1d555edc89d06c7929c4edd678db732ddb398e6a454f4c5374c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://cbacd3dafdd80592820572be5d7d05de07aae16b34b04ef9ef7602a7e066c594",
+				"dweb:/ipfs/Qmf4ze5EdfPhJgSJ8asfVwiCxpNCEzkX6RZF5peRBDEuJa"
+			]
+		}
+	},
+	"version": 1
+}

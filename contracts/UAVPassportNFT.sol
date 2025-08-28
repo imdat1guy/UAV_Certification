@@ -2,12 +2,20 @@
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
+import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
+import "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "./CertificateNFT.sol"; // 
 import "./CertificateTypes.sol";
 
-contract UAVPassportNFT is ERC721, AccessControl, IERC721Receiver {
+// minimal interface to read types from your Certificate1155
+interface ICert1155Typed {
+    function getCertificateType(uint256 id) external view returns (CertificateTypes.CertificateType);
+}
+
+contract UAVPassportNFT is ERC721, AccessControl, IERC721Receiver, IERC1155Receiver  {
     using Strings for uint256;
     using CertificateTypes for CertificateTypes.CertificateType;
 
@@ -48,9 +56,28 @@ contract UAVPassportNFT is ERC721, AccessControl, IERC721Receiver {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
-    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721, AccessControl) returns (bool) {
+    // function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721, AccessControl) returns (bool) {
+    //     return super.supportsInterface(interfaceId);
+    // }
+
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        virtual
+        override(ERC721, AccessControl, IERC165)
+        returns (bool)
+    {
+        // Explicitly advertise the receiver interfaces
+        if (
+            interfaceId == type(IERC721Receiver).interfaceId ||
+            interfaceId == type(IERC1155Receiver).interfaceId
+        ) {
+            return true;
+        }
         return super.supportsInterface(interfaceId);
     }
+
+
 
     modifier onlyManufacturer() {
         require(hasRole(MANUFACTURER_ROLE, msg.sender), "Caller is not a manufacturer");
@@ -144,6 +171,38 @@ contract UAVPassportNFT is ERC721, AccessControl, IERC721Receiver {
         certificate.safeTransferFrom(msg.sender, address(this), certificateTokenId);
     }
 
+    function linkCertificates1155Batch(
+        uint256 uavTokenId,
+        address cert1155,
+        uint256[] calldata ids
+    ) external onlyAuthority {
+        require(_tokenExists(uavTokenId), "UAV token does not exist");
+
+        IERC1155 c = IERC1155(cert1155);
+        uint256 n = ids.length;
+        uint256[] memory amounts = new uint256[](n);
+
+        for (uint256 i = 0; i < n; i++) {
+            // caller must hold the certificate (balance >= 1)
+            require(c.balanceOf(msg.sender, ids[i]) >= 1, "Caller lacks certificate balance");
+            amounts[i] = 1;
+
+            // read type from your Certificate1155 (via a small interface)
+            CertificateTypes.CertificateType ctype = ICert1155Typed(cert1155).getCertificateType(ids[i]);
+
+            linkedCertificates[uavTokenId].push(LinkedCertificate({
+                certificateContract: cert1155,
+                certificateTokenId: ids[i],
+                ctype: ctype
+            }));
+
+            emit CertificateLinked(uavTokenId, ctype, cert1155, ids[i]);
+        }
+
+        // custody mirrors the ERC-721 flow: move tokens to the passport contract
+        c.safeBatchTransferFrom(msg.sender, address(this), ids, amounts, "");
+    }
+
     function transferUAV(address to, uint256 tokenId) external {
         require(ownerOf(tokenId) == msg.sender, "Caller is not the owner");
         _transfer(msg.sender, to, tokenId);
@@ -188,5 +247,14 @@ contract UAVPassportNFT is ERC721, AccessControl, IERC721Receiver {
 
     function onERC721Received(address, address, uint256, bytes calldata) external pure override returns (bytes4) {
         return IERC721Receiver.onERC721Received.selector;
+    }
+
+    // IERC1155Receiver hooks
+    function onERC1155Received(address, address, uint256, uint256, bytes calldata) external pure override returns (bytes4){ 
+        return IERC1155Receiver.onERC1155Received.selector; 
+    }
+
+    function onERC1155BatchReceived(address, address, uint256[] calldata, uint256[] calldata, bytes calldata) external pure override returns (bytes4){ 
+        return IERC1155Receiver.onERC1155BatchReceived.selector; 
     }
 }
