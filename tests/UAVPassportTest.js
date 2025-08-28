@@ -35,6 +35,10 @@
         console.log('Manufacturer Address:', manufacturerAddress);
         console.log('Notified Body Address:', notifiedBodyAddress);
 
+        // Profile constants
+        const PROFILE_EASA  = ethers.utils.keccak256(ethers.utils.toUtf8Bytes('PROFILE:EASA-CERTIFIED-V1'));
+        const CONTROLS_HASH = ethers.constants.HashZero; // or keccak256(JSON.stringify(controls))
+
         // Deploy UAVPassportNFT contract
         console.log('\nDeploying UAVPassportNFT contract...');
         const uavPassportFactory = await ethers.getContractFactory('UAVPassportNFT', regulatoryAuthority);
@@ -45,13 +49,13 @@
         // Grant roles in UAVPassportNFT contract
         console.log('\nGranting roles in UAVPassportNFT contract...');
         // Grant MANUFACTURER_ROLE to manufacturer
-        const MANUFACTURER_ROLE = ethers.utils.keccak256(ethers.utils.toUtf8Bytes('MANUFACTURER_ROLE'));
+        //const MANUFACTURER_ROLE = ethers.utils.keccak256(ethers.utils.toUtf8Bytes('MANUFACTURER_ROLE'));
         let tx = await uavPassportContract.connect(regulatoryAuthority).addManufacturer(manufacturerAddress);
         let receipt = await tx.wait();
         console.log('MANUFACTURER_ROLE granted to manufacturer.');
 
         // Grant AUTHORITY_ROLE to regulatory authority
-        const AUTHORITY_ROLE = ethers.utils.keccak256(ethers.utils.toUtf8Bytes('AUTHORITY_ROLE'));
+        //const AUTHORITY_ROLE = ethers.utils.keccak256(ethers.utils.toUtf8Bytes('AUTHORITY_ROLE'));
         tx = await uavPassportContract.connect(regulatoryAuthority).addAuthority(regulatoryAuthorityAddress);
         receipt = await tx.wait();
         console.log('AUTHORITY_ROLE granted to regulatory authority.');
@@ -71,7 +75,7 @@
         // Deploy Airworthiness contract
         console.log('\nDeploying Airworthiness contract...');
         const airworthinessFactory = await ethers.getContractFactory('Airworthiness', regulatoryAuthority);
-        const airworthinessContract = await airworthinessFactory.deploy(regulatoryAuthorityAddress);
+        const airworthinessContract = await airworthinessFactory.deploy(regulatoryAuthorityAddress, PROFILE_EASA);
         await airworthinessContract.deployed();
         console.log('Airworthiness contract deployed at:', airworthinessContract.address);
 
@@ -125,7 +129,9 @@
             0, // CertificateTypes.CertificateType.Airworthiness
             regulatoryAuthorityAddress,
             airworthinessContract.address,
-            applicationId
+            applicationId,
+            PROFILE_EASA,
+            CONTROLS_HASH
         );
         receipt = await tx.wait();
         event = receipt.events.find(event => event.event === 'CertificateMinted');

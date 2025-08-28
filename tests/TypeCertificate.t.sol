@@ -16,9 +16,11 @@ contract TypeCertificateTest is Test {
     bytes32 initialDroneSpecHash = keccak256("drone-spec");
     uint256 testApplicationId = 1;
 
+    bytes32 constant PROFILE_EASA = keccak256("PROFILE:EASA-CERTIFIED-V1");
+
     function setUp() public {
         vm.prank(regulatoryAuthority);
-        typeCertificate = new TypeCertificate();
+        typeCertificate = new TypeCertificate(PROFILE_EASA);
 
         vm.prank(regulatoryAuthority);
         typeCertificate.authorizeNotifiedBody(notifiedBody);

@@ -8,6 +8,7 @@ import "./CertificateTypes.sol";
 interface AirworthinessInterface {
     function regulatoryAuthority() external view returns (address);
     function isCertified(uint256 applicationId) external view returns (bool);
+    function activeProfileId() external view returns (bytes32);
 }
 
 contract CertificateNFT is ERC721URIStorage, AccessControl {
@@ -23,6 +24,8 @@ contract CertificateNFT is ERC721URIStorage, AccessControl {
         bool isValid;
         address linkedContract;        // Address of the Certification application contract (Airworthiness)
         uint256 linkedApplicationId;   // Application ID in the contract
+        bytes32 profileId;     // <-- NEW: the profile this certificate satisfies
+        bytes32 controlsHash;  // <-- NEW: hash of the control set/version
     }
 
     mapping(uint256 => CertificateData) public certificateData;
@@ -31,7 +34,9 @@ contract CertificateNFT is ERC721URIStorage, AccessControl {
         uint256 indexed tokenId,
         CertificateTypes.CertificateType indexed ctype,
         address issuer,
-        string metadataURI
+        string metadataURI,
+        bytes32 profileId,
+        bytes32 controlsHash
     );
 
     event CertificateRevoked(uint256 indexed tokenId, address issuer);
@@ -63,7 +68,9 @@ contract CertificateNFT is ERC721URIStorage, AccessControl {
         CertificateTypes.CertificateType ctype,
         address issuer,
         address linkedContract,
-        uint256 linkedApplicationId
+        uint256 linkedApplicationId,
+        bytes32 profileId,
+        bytes32 controlsHash
     ) external onlyAuthority {
 
         if(ctype == CertificateTypes.CertificateType.Airworthiness){
@@ -75,6 +82,9 @@ contract CertificateNFT is ERC721URIStorage, AccessControl {
 
             // Check that the applicationId exists in the Airworthiness contract
             require(airworthiness.isCertified(linkedApplicationId), "Application ID does not exist in the linked contract");
+
+            // Assert the profile being minted matches the issuer’s active profile
+            require(profileId == airworthiness.activeProfileId(), "Profile mismatch with authority's active profile");
         }
         
         //mint the certificate
@@ -91,10 +101,12 @@ contract CertificateNFT is ERC721URIStorage, AccessControl {
             issuer: issuer,
             isValid: true,
             linkedContract: linkedContract,
-            linkedApplicationId: linkedApplicationId
+            linkedApplicationId: linkedApplicationId,
+            profileId: profileId,
+            controlsHash: controlsHash
         });
 
-        emit CertificateMinted(tokenId, ctype, issuer, metadataURI);
+        emit CertificateMinted(tokenId, ctype, issuer, metadataURI, profileId, controlsHash);
     }
 
     // Retrieve CertificateType
@@ -107,6 +119,11 @@ contract CertificateNFT is ERC721URIStorage, AccessControl {
     function getIssuer(uint256 tokenId) external view returns (address) {
         require(_tokenExists(tokenId), "Certificate does not exist");
         return certificateData[tokenId].issuer;
+    }
+
+    function getProfileId(uint256 tokenId) external view returns (bytes32) { // <-- NEW
+        require(_tokenExists(tokenId), "Certificate does not exist");
+        return certificateData[tokenId].profileId;
     }
 
     // Check if the certificate is currently valid

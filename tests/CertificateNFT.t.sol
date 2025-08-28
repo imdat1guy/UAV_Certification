@@ -9,10 +9,12 @@ import "contracts/CertificateTypes.sol";
 // Mock contract to simulate Airworthiness contract behavior
 contract MockAirworthiness {
     address public regulatoryAuthority;
+    bytes32 public activeProfileId;
     mapping(uint256 => bool) public certifiedApplications;
 
-    constructor(address _regulatoryAuthority) {
+    constructor(address _regulatoryAuthority, bytes32 _activeProfileId) {
         regulatoryAuthority = _regulatoryAuthority;
+        activeProfileId = _activeProfileId;
     }
 
     function isCertified(uint256 applicationId) external view returns (bool) {
@@ -36,10 +38,14 @@ contract CertificateNFTTest is Test {
 
     uint256 testApplicationId = 1;
     string testMetadataURI = "ipfs://certificate-metadata";
+
+    bytes32 constant PROFILE_EASA = keccak256("PROFILE:EASA-CERTIFIED-V1");
+    bytes32 constant CONTROLS_HASH = bytes32(0); // optional; using zero here
+
     function setUp() public {
         // Deploy the CertificateNFT contract
         certificateNFT = new CertificateNFT();
-        mockAirworthiness = new MockAirworthiness(authority);
+        mockAirworthiness = new MockAirworthiness(authority, PROFILE_EASA);
 
         // Since the deployer is already the admin, we can directly add an authority
         vm.prank(address(this)); // Foundry tests run as address(this) by default
@@ -59,7 +65,9 @@ contract CertificateNFTTest is Test {
             CertificateTypes.CertificateType.Airworthiness,
             issuer,
             address(mockAirworthiness),
-            testApplicationId
+            testApplicationId,
+            PROFILE_EASA,
+            CONTROLS_HASH
         );
 
         // Verify the certificate exists
@@ -79,7 +87,9 @@ contract CertificateNFTTest is Test {
             CertificateTypes.CertificateType.Airworthiness,
             issuer,
             address(mockAirworthiness),
-            testApplicationId
+            testApplicationId,
+            PROFILE_EASA,
+            CONTROLS_HASH
         );
     }
 
@@ -91,7 +101,9 @@ contract CertificateNFTTest is Test {
             CertificateTypes.CertificateType.Airworthiness,
             issuer,
             address(mockAirworthiness),
-            testApplicationId
+            testApplicationId,
+            PROFILE_EASA,
+            CONTROLS_HASH
         );
     }
 
@@ -107,7 +119,9 @@ contract CertificateNFTTest is Test {
             CertificateTypes.CertificateType.Export,
             issuer,
             address(mockAirworthiness),
-            testApplicationId
+            testApplicationId,
+            PROFILE_EASA,
+            CONTROLS_HASH
         );
 
         uint256 tokenId = 1;
@@ -126,7 +140,9 @@ contract CertificateNFTTest is Test {
             CertificateTypes.CertificateType.Import,
             issuer,
             address(mockAirworthiness),
-            testApplicationId
+            testApplicationId,
+            PROFILE_EASA,
+            CONTROLS_HASH
         );
 
         uint256 tokenId = 1;
@@ -145,7 +161,9 @@ contract CertificateNFTTest is Test {
             CertificateTypes.CertificateType.Airworthiness,
             issuer,
             address(mockAirworthiness),
-            testApplicationId
+            testApplicationId,
+            PROFILE_EASA,
+            CONTROLS_HASH
         );
 
         uint256 tokenId = 1;
@@ -164,7 +182,9 @@ contract CertificateNFTTest is Test {
             CertificateTypes.CertificateType.Airworthiness,
             issuer,
             address(mockAirworthiness),
-            testApplicationId
+            testApplicationId,
+            PROFILE_EASA,
+            CONTROLS_HASH
         );
 
         uint256 tokenId = 1;
@@ -189,7 +209,9 @@ contract CertificateNFTTest is Test {
             CertificateTypes.CertificateType.Airworthiness,
             issuer,
             address(mockAirworthiness),
-            testApplicationId
+            testApplicationId,
+            PROFILE_EASA,
+            CONTROLS_HASH
         );
 
         uint256 tokenId = 1;

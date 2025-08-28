@@ -46,6 +46,7 @@ const ABI_AIR = [
   "function submitApplication(address,uint256,string) external",
   "function completeInspection(uint256,string) external",
   "function issueCertificate(uint256,string) external",
+  "function activeProfileId() view returns (bytes32)",
   "event ApplicationSubmitted(uint256 indexed applicationId)",
   "event InspectionCompleted(uint256 indexed applicationId,string)",
   "event CertificateIssued(uint256 indexed applicationId,string)"
@@ -58,7 +59,7 @@ const ABI_CERT = [
   "function addAuthority(address) external",
 
   // mint + approve
-  "function mintCertificate(string,uint8,address,address,uint256) external",
+  "function mintCertificate(string,uint8,address,address,uint256,bytes32,bytes32) external",
   "function approve(address,uint256) external",
 
   // queries for link step
@@ -221,7 +222,10 @@ async function main() {
         common,"submitAirworthiness",
         air.connect(mfr).submitApplication(PASSPORT, uavTokenId, "ipfs://aw_docs")
       );
-      const appId = ifaceAir.parseLog(rcApp.logs[0]).args.applicationId.toString();
+      //const appId = ifaceAir.parseLog(rcApp.logs[0]).args.applicationId.toString();
+      const appId = ifaceAir.parseLog(
+        rcApp.logs.find(l => l.topics[0] === ifaceAir.getEventTopic("ApplicationSubmitted"))
+      ).args.applicationId.toString();
 
       // 3. completeInspection (reg)
       await logTxBase(common,"completeInspection", air.completeInspection(appId,"hash_inspection"));
@@ -230,9 +234,12 @@ async function main() {
       await logTxBase(common,"issueCertificate", air.issueCertificate(appId,"ipfs://aw_cert_meta"));
 
       // 5. mintCertificate (reg)   ctype = 0 (Airworthiness)
+      const profileId    = await air.activeProfileId();
+      const controlsHash = ethers.constants.HashZero;
+            
       const rcCert = await logTxBase(
         common,"mintCertificate",
-        cert.mintCertificate("ipfs://aw_cert_meta", 0, reg.address, AIRWORTH, appId)
+        cert.mintCertificate("ipfs://aw_cert_meta", 0, reg.address, AIRWORTH, appId, profileId, controlsHash)
       );
       const certTokenId = ifaceCert.parseLog(rcCert.logs.find(l=>l.topics[0]===ifaceCert.getEventTopic("CertificateMinted"))).args.tokenId.toString();
 

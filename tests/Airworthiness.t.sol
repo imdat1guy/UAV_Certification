@@ -26,8 +26,10 @@ contract AirworthinessTest is Test {
     address unauthorizedUser = address(3);
     uint256 testTokenId = 1;
 
+    bytes32 constant PROFILE_EASA = keccak256("PROFILE:EASA-CERTIFIED-V1");
+
     function setUp() public {
-        airworthiness = new Airworthiness(regulatoryAuthority);
+        airworthiness = new Airworthiness(regulatoryAuthority, PROFILE_EASA);
         mockUAVNFT = new MockUAVPassportNFT();
         mockUAVNFT.setOwner(testTokenId, owner);
     }
@@ -39,12 +41,13 @@ contract AirworthinessTest is Test {
         airworthiness.submitApplication(address(mockUAVNFT), testTokenId, "ipfs://test-docs");
         vm.stopPrank();
 
-        (uint256 id, , uint256 uavTokenId, string memory ipfsHash, Airworthiness.CertificationStatus status) = airworthiness.applications(1);
+        (uint256 id, , uint256 uavTokenId, string memory ipfsHash, Airworthiness.CertificationStatus status, bytes32 profileId) = airworthiness.applications(1);
 
         assertEq(id, 1);
         assertEq(uavTokenId, testTokenId);
         assertEq(uint256(status), uint256(Airworthiness.CertificationStatus.Pending));
         assertEq(keccak256(bytes(ipfsHash)), keccak256(bytes("ipfs://test-docs")));
+        assertEq(profileId, PROFILE_EASA);
     }
 
     function test_ShouldAllowOnlyRegulatoryToCompleteInspection() public {
@@ -76,7 +79,7 @@ contract AirworthinessTest is Test {
         airworthiness.issueCertificate(1, "ipfs://certificate");
         vm.stopPrank();
 
-        (, , , , Airworthiness.CertificationStatus status) = airworthiness.applications(1);
+        (, , , , Airworthiness.CertificationStatus status,) = airworthiness.applications(1);
         assertEq(uint256(status), uint256(Airworthiness.CertificationStatus.Certified));
     }
 

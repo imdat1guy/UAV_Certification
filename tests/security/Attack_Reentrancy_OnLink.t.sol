@@ -42,6 +42,8 @@ contract Fuzz_UAVPassport_and_Airworthiness is Test {
     address manufacturer = address(2);
     address authority = address(3);
 
+    bytes32 constant PROFILE_EASA = keccak256("PROFILE:EASA-CERTIFIED-V1");
+
     function setUp() public {
         passport = new UAVPassportNFT();
         cert = new CertMock();
@@ -57,7 +59,7 @@ contract Fuzz_UAVPassport_and_Airworthiness is Test {
         passport.addAuthority(authority);
 
         // Airworthiness uses its own RA address
-        air = new Airworthiness(authority);
+        air = new Airworthiness(authority, PROFILE_EASA);
 
         // Mock UAV owner registry for Airworthiness
         mockUAV = new MockUAVPassportNFT();

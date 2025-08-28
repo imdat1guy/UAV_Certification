@@ -41,6 +41,7 @@ contract UAVPassportNFT is ERC721, AccessControl, IERC721Receiver {
     event ImportRejected(uint256 indexed tokenId, string reason);
     event MetadataUpdated(uint256 indexed tokenId, string ipfsMetadataCID);
     event ImportExportRecorded(uint256 indexed tokenId, string jurisdictionIdentifier);
+    event CertificateLinkedWithProfile(uint256 indexed tokenId, bytes32 requiredProfile, bytes32 certProfile);
 
     constructor() ERC721("UAVPassport", "UAVP") {
         tokenCounter = 0;
@@ -114,7 +115,34 @@ contract UAVPassportNFT is ERC721, AccessControl, IERC721Receiver {
 
     }
 
+    function linkCertificateWithProfileCheck(
+        uint256 uavTokenId,
+        address certificateContractAddress,
+        uint256 certificateTokenId,
+        bytes32 requiredProfile
+    ) external onlyAuthority {
+        require(_tokenExists(uavTokenId), "UAV token does not exist");
 
+        CertificateNFT certificate = CertificateNFT(certificateContractAddress);
+        require(certificate.ownerOf(certificateTokenId) == msg.sender, "Caller is not the owner of the CertificateNFT");
+
+        // profile check (hard equality; any “equivalence” decision happens off-chain by the authority)
+        bytes32 certProfile = certificate.getProfileId(certificateTokenId);
+        require(certProfile == requiredProfile, "Certificate profile does not satisfy required profile");
+
+        CertificateTypes.CertificateType ctype = certificate.getCertificateType(certificateTokenId);
+
+        linkedCertificates[uavTokenId].push(LinkedCertificate({
+            certificateContract: certificateContractAddress,
+            certificateTokenId: certificateTokenId,
+            ctype: ctype
+        }));
+
+        emit CertificateLinked(uavTokenId, ctype, certificateContractAddress, certificateTokenId);
+        emit CertificateLinkedWithProfile(uavTokenId, requiredProfile, certProfile);
+
+        certificate.safeTransferFrom(msg.sender, address(this), certificateTokenId);
+    }
 
     function transferUAV(address to, uint256 tokenId) external {
         require(ownerOf(tokenId) == msg.sender, "Caller is not the owner");

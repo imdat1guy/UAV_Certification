@@ -14,19 +14,24 @@ contract Airworthiness {
         uint256 uavTokenId;
         string ipfsHashDocuments;
         CertificationStatus status;
+        bytes32 profileId; // jurisdictional profile for this application
     }
 
     uint256 public applicationCounter;
     mapping(uint256 => Application) public applications;
     address public regulatoryAuthority;
 
+    // The authority’s active profile (e.g., keccak256("EASA-CERT-v2024"))
+    bytes32 public activeProfileId;
+
     event ApplicationSubmitted(uint256 indexed applicationId);
     event InspectionCompleted(uint256 indexed applicationId, string inspectionReportHash);
     event CertificateIssued(uint256 indexed applicationId, string airworthinessCertificateHash);
 
-    constructor(address _regulatoryAuthority) {
-    require(_regulatoryAuthority != address(0), "Invalid address");
+    constructor(address _regulatoryAuthority, bytes32 _activeProfileId) {
+        require(_regulatoryAuthority != address(0), "Invalid address");
         regulatoryAuthority = _regulatoryAuthority;
+        activeProfileId = _activeProfileId;
     }
 
     modifier onlyRegulatoryAuthority() {
@@ -42,7 +47,7 @@ contract Airworthiness {
         require(uavPassportNFT.ownerOf(uavTokenId) == msg.sender, "Caller does not own the specified UAVPassportNFT");
 
         applicationCounter++;
-        applications[applicationCounter] = Application(applicationCounter, uavNFTAddress, uavTokenId, ipfsHashDocuments, CertificationStatus.Pending);
+        applications[applicationCounter] = Application(applicationCounter, uavNFTAddress, uavTokenId, ipfsHashDocuments, CertificationStatus.Pending, activeProfileId);
         
         emit ApplicationSubmitted(applicationCounter);
     }
@@ -51,15 +56,15 @@ contract Airworthiness {
         emit InspectionCompleted(applicationId, inspectionReportHash);
     }
 
-function issueCertificate(uint256 applicationId, string memory airworthinessCertificateHash) external onlyRegulatoryAuthority {
-    Application storage app = applications[applicationId];
-    
-    require(app.id != 0, "Application does not exist"); // Ensure the application exists
-    require(app.status == CertificationStatus.Pending, "Application is not pending");
+    function issueCertificate(uint256 applicationId, string memory airworthinessCertificateHash) external onlyRegulatoryAuthority {
+        Application storage app = applications[applicationId];
+        
+        require(app.id != 0, "Application does not exist"); // Ensure the application exists
+        require(app.status == CertificationStatus.Pending, "Application is not pending");
 
-    app.status = CertificationStatus.Certified;
-    emit CertificateIssued(applicationId, airworthinessCertificateHash);
-}
+        app.status = CertificationStatus.Certified;
+        emit CertificateIssued(applicationId, airworthinessCertificateHash);
+    }
 
     function isCertified(uint256 applicationId) external view returns (bool) {
         Application storage app = applications[applicationId];

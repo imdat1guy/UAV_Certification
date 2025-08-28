@@ -12,6 +12,7 @@ contract TypeCertificate {
         CertificateStatus status;
         address assignedNotifiedBody; // Notified body assigned to the application
         string notifiedBodyReportCID;
+        bytes32 profileId;
     }
 
     //variables
@@ -19,6 +20,8 @@ contract TypeCertificate {
     mapping(uint256 => Application) public applications;
     address public regulatoryAuthority;
     mapping(address => bool) public notifiedBodies;
+
+    bytes32 public activeProfileId;
 
     //events
     event NotifiedBodyAuthorized(address notifiedBody);
@@ -34,8 +37,9 @@ contract TypeCertificate {
     event ApplicationRejected(uint256 indexed applicationId);
     event CertificateIssued(uint256 indexed applicationId, string ipfsHashCertificate); 
 
-    constructor() {
+    constructor(bytes32 _activeProfileId) {
         regulatoryAuthority = msg.sender; //deployed by the regulatory authority (FAA, EASA, etc.)
+        activeProfileId = _activeProfileId;
     }
 
     modifier onlyRegulatoryAuthority() {
@@ -63,7 +67,8 @@ contract TypeCertificate {
             droneSpecDocumentHash: droneSpecDocumentHash,
             status: CertificateStatus.Pending,
             assignedNotifiedBody: address(0),
-            notifiedBodyReportCID: ""
+            notifiedBodyReportCID: "",
+            profileId: activeProfileId
         });
 
         emit ApplicationSubmitted(

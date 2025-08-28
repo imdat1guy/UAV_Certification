@@ -30,9 +30,13 @@
         const contractName = 'TypeCertificate'; // Update if your contract name is different
         const contractFactory = await ethers.getContractFactory(contractName, regulatoryAuthority);
 
+        const PROFILE_EASA = ethers.utils.keccak256(
+            ethers.utils.toUtf8Bytes('PROFILE:EASA-CERTIFIED-V1')
+        );
+
         // Deploy the contract
         console.log('\nDeploying the contract...');
-        const contract = await contractFactory.deploy();
+        const contract = await contractFactory.deploy(PROFILE_EASA);
         await contract.deployed();
         console.log('Contract deployed at:', contract.address);
 
@@ -104,6 +108,7 @@
         console.log(`Status: ${certificateStatusToString(application.status)}`);
         console.log(`Assigned Notified Body: ${application.assignedNotifiedBody}`);
         console.log(`Notified Body Report CID: ${application.notifiedBodyReportCID}`);
+        if (application.profileId) console.log(`ProfileId: ${application.profileId}`);
 
         // Helper function to map status enum
         function certificateStatusToString(status) {

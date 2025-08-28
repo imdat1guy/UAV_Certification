@@ -28,6 +28,9 @@ const ABI = [
   "function issueCertificate(uint256 applicationId, string typeCertificateCID) external",
   "function rejectApplication(uint256 applicationId) external",
 
+  "function notifiedBodies(address) view returns (bool)",
+  "function activeProfileId() view returns (bytes32)",
+
   // events (note the extra args vs your earlier script)
   "event NotifiedBodyAuthorized(address indexed notifiedBody)",
   "event NotifiedBodyRevoked(address indexed notifiedBody)",
