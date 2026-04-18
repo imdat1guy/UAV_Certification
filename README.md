@@ -2,7 +2,7 @@
 
 The UAV Certification and Passport NFT System is designed to streamline the certification process for Unmanned Aerial Vehicles (UAVs). By leveraging blockchain technology and Non-Fungible Tokens (NFTs), this system ensures secure, transparent, and tamper-proof management of UAV certifications and passports.
 
-![System Architecture](assets\System_Architecture.png)
+![System_Architecture](img/System_Architecture.png)
 
 ## Features
 
